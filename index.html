@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Декларативность — htmx + Mustache</title>
+  <!-- htmx 2 по умолчанию шлёт запросы только на свой домен; разрешаем внешний API -->
+  <meta name="htmx-config" content='{"selfRequestsOnly": false}'>
+  <script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.min.js"></script>
+  <script src="https://unpkg.com/htmx-ext-client-side-templates@2.0.0/client-side-templates.js"></script>
+  <script src="https://unpkg.com/mustache@4.2.0/mustache.min.js"></script>
+</head>
+<body>
+  <h1>Декларативность</h1>
+
+  <div hx-ext="client-side-templates">
+    <a href="#"
+       hx-get="https://dummyjson.com/users?limit=5&select=email,password"
+       hx-target="#users"
+       mustache-template="user-tpl">Список пользователей</a>
+  </div>
+
+  <ul id="users"><li><b>?:?</b></li></ul>
+
+  <template id="user-tpl">
+    {{#users}}<li><b>{{email}}:{{password}}</b></li>{{/users}}
+  </template>
+</body>
+</html>
